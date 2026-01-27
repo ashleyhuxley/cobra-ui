@@ -34,7 +34,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawRect_DrawsRectangle()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "iQMK4XGB8WmJemdTVFMb4A==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -51,7 +50,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void FillRect_FillsRectangle()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "LEpG3qenlMqAbOPIhgtpoQ==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -68,7 +66,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void FillEllipse_FillsEllipse()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "gyV7oBcaSFe2M4ltokXvhA==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -85,7 +82,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawEllipse_DrawsEllipse()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "tRdmaUTHk7GE5irU5YLyPQ==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -102,7 +98,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawLine_DrawsLine()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "B8HFwbRdhhiVipbpIEW/Sw==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -119,7 +114,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void SetPixel_SetsPixelColor()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "/3vUdo6wERcwAc66hzNDXw==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -136,7 +130,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawImage_DrawsImageAtPosition()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "5s339TIdJc1qO6BbFiVksw==");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -156,7 +149,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void Flush_WithNoChanges_DoesNothing()
         {
             // Arrange
-            var expectedScanlines = new List<byte[]>();
             var mockTarget = new MockTarget(TestWidth, TestHeight, "foo");
 
             var renderer = new GraphicsRenderer(mockTarget);
@@ -169,35 +161,19 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         }
 
         [Test]
-        public void Flush_WithFullUpdateTarget_FlushesFullFrame()
-        {
-            //// Arrange
-            //var renderer = new GraphicsRenderer(_mockTarget.Object);
-            //renderer.SetPixel(10, 10, Color.Red);
-
-            //// Act
-            //renderer.Flush();
-
-            //// Assert
-            //_mockTarget.Verify(t => t.BeginFrame(), Times.Once);
-            //_mockTarget.Verify(t => t.WriteScanline(It.IsAny<int>(), It.IsAny<ReadOnlySpan<byte>>()), Times.Exactly(TestHeight));
-            //_mockTarget.Verify(t => t.EndFrame(), Times.Once);
-        }
-
-        [Test]
         public void Flush_ClearsDirtyRegion()
         {
-            //// Arrange
-            //var renderer = new GraphicsRenderer(_mockTarget.Object);
-            //renderer.SetPixel(10, 10, Color.Red);
+            // Arrange
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "W+GOhR5vL3eslY6Gz0Dq7g==");
+            var renderer = new GraphicsRenderer(mockTarget);
+            renderer.SetPixel(10, 10, Color.Red);
 
-            //// Act
-            //renderer.Flush();
-            //renderer.Flush(); // Second flush should do nothing
+            // Act
+            renderer.Flush();
+            renderer.Flush(); // Second flush should do nothing
 
-            //// Assert
-            //_mockTarget.Verify(t => t.BeginFrame(), Times.Once);
-            //_mockTarget.Verify(t => t.EndFrame(), Times.Once);
+            // Assert
+            mockTarget.Verify();
         }
 
         [Test]

@@ -9,7 +9,7 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         private readonly int _height;
 
         private bool _isStarted;
-        private bool isCompleted;
+        private bool _isCompleted;
 
         private readonly List<byte[]> _scanlines = [];
         private readonly string _expectedHash;
@@ -27,13 +27,23 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
 
         public void BeginRegion(Rectangle region)
         {
+            if (_isStarted)
+            {
+                throw new InvalidOperationException("Region already started.");
+            }
+
+            if (_isCompleted)
+            {
+                throw new InvalidOperationException("Region already completed.");
+            }
+
             _isStarted = true;
         }
 
         public void EndRegion()
         {
             _isStarted = false;
-            isCompleted = true;
+            _isCompleted = true;
         }
 
         public void WriteScanline(int y, ReadOnlySpan<byte> rgb565)
@@ -54,7 +64,7 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
             {
                 Convert.ToBase64String(_scanlines[0]);
 
-                Assert.That(isCompleted, Is.True, "Region was not completed.");
+                Assert.That(_isCompleted, Is.True, "Region was not completed.");
                 
                 var hash = ComputeMd5Hash(_scanlines);
 
@@ -66,7 +76,7 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         {
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(isCompleted, Is.False, "Region completed when not expected");
+                Assert.That(_isCompleted, Is.False, "Region completed when not expected");
                 Assert.That(_scanlines.Count, Is.Zero, $"Found {_scanlines.Count} scanlines when none expected");
             }
         }
