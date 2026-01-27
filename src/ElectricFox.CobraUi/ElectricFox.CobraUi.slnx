@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ElectricFox.CobraUi.UnitTests/ElectricFox.CobraUi.UnitTests.csproj" />
+  <Project Path="ElectricFox.CobraUi/ElectricFox.CobraUi.csproj" />
+</Solution>
