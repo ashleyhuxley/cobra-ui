@@ -1,5 +1,8 @@
 ﻿using ElectricFox.CobraUi.Display;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace ElectricFox.CobraUi.UnitTests.Graphics
 {
@@ -11,7 +14,7 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         private bool _isStarted;
         private bool _isCompleted;
 
-        private readonly List<byte[]> _scanlines = [];
+        private readonly List<Rgba32[]> _scanlines = [];
         private readonly string _expectedHash;
 
         public MockTarget(int width, int height, string expectedHash)
@@ -46,15 +49,15 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
             _isCompleted = true;
         }
 
-        public void WriteScanline(int y, ReadOnlySpan<byte> rgb565)
+        public void WriteScanline(int y, ReadOnlySpan<Rgba32> pixelData)
         {
             if (!_isStarted)
             {
                 throw new InvalidOperationException("Region not started.");
             }
 
-            byte[] line = new byte[rgb565.Length];
-            rgb565.CopyTo(line);
+            Rgba32[] line = new Rgba32[pixelData.Length];
+            pixelData.CopyTo(line);
             _scanlines.Add(line);
         }
 
@@ -62,8 +65,6 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         {
             using (Assert.EnterMultipleScope())
             {
-                Convert.ToBase64String(_scanlines[0]);
-
                 Assert.That(_isCompleted, Is.True, "Region was not completed.");
                 
                 var hash = ComputeMd5Hash(_scanlines);
@@ -91,16 +92,17 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
             throw new InvalidOperationException("EndFrame should not be called on a partial target");
         }
 
-        private static string ComputeMd5Hash(List<byte[]> scanlines)
+        private static string ComputeMd5Hash(List<Rgba32[]> scanlines)
         {
-            using var md5 = System.Security.Cryptography.MD5.Create();
+            using var md5 = MD5.Create();
 
             foreach (var line in scanlines)
             {
-                md5.TransformBlock(line, 0, line.Length, null, 0);
+                byte[] data = MemoryMarshal.AsBytes(line).ToArray();
+                md5.TransformBlock(data, 0, line.Length, null, 0);
             }
 
-            md5.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+            md5.TransformFinalBlock([], 0, 0);
 
             return Convert.ToBase64String(md5.Hash!);
         }

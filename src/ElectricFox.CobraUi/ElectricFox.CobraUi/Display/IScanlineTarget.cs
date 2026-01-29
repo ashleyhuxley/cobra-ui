@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SixLabors.ImageSharp.PixelFormats;
+using System;
 
 namespace ElectricFox.CobraUi.Display
 {
@@ -8,7 +9,7 @@ namespace ElectricFox.CobraUi.Display
         int Height { get; }
 
         void BeginFrame();
-        void WriteScanline(int y, ReadOnlySpan<byte> rgb565);
+        void WriteScanline(int y, ReadOnlySpan<Rgba32> data);
         void EndFrame();
     }
 }

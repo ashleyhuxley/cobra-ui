@@ -5,6 +5,8 @@ using SixLabors.ImageSharp.PixelFormats;
 using Moq;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Drawing.Processing;
+using Castle.Core.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace ElectricFox.CobraUi.UnitTests.Graphics
 {
@@ -13,14 +15,15 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         private const int TestWidth = 320;
         private const int TestHeight = 240;
 
+        private ILogger<GraphicsRenderer> _logger => new Mock<ILogger<GraphicsRenderer>>().Object;
 
         [Test]
         public void Clear_FillsEntireImageWithColor()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "Bq6KAdgNqWLHmHwmSvZM7A==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "mLz4/w44l1pYTYcdjWLm9A==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Arrange & Act
             renderer.Clear(Color.Black);
@@ -34,9 +37,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawRect_DrawsRectangle()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "iQMK4XGB8WmJemdTVFMb4A==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "ZfpAveV/eO71Q/PZOwvn1A==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Arrange & Act
             renderer.DrawRect(10, 10, 50, 30, Color.Red, 2);
@@ -50,9 +53,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void FillRect_FillsRectangle()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "LEpG3qenlMqAbOPIhgtpoQ==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "mpbDZXpD0aW3P069DEIYFw==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.FillRect(20, 20, 40, 40, Color.Green);
@@ -66,9 +69,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void FillEllipse_FillsEllipse()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "gyV7oBcaSFe2M4ltokXvhA==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "G5VmqYxl2Mo1JxAy+jX+0Q==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.FillEllipse(50, 50, 60, 60, Color.Yellow);
@@ -82,9 +85,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawEllipse_DrawsEllipse()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "tRdmaUTHk7GE5irU5YLyPQ==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "coB1ohTUiG6W00WuYbgAjQ==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.DrawEllipse(30, 30, 50, 50, Color.Magenta);
@@ -98,9 +101,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawLine_DrawsLine()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "B8HFwbRdhhiVipbpIEW/Sw==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "6NDHQ/5WGrchIHhzPWItAA==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.DrawLine(10, 10, 100, 100, Color.White);
@@ -114,9 +117,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void SetPixel_SetsPixelColor()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "/3vUdo6wERcwAc66hzNDXw==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "k7iFrf4NoInN9jSQT9WfcQ==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.SetPixel(100, 100, Color.Cyan);
@@ -130,9 +133,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void DrawImage_DrawsImageAtPosition()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "5s339TIdJc1qO6BbFiVksw==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "Qhq0YdsYB/5vKohIoin7RQ==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             var image = new Image<Rgba32>(50, 50);
             image.Mutate(ctx => ctx.Clear(Color.Red));
@@ -151,7 +154,7 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
             // Arrange
             var mockTarget = new MockTarget(TestWidth, TestHeight, "foo");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.Flush();
@@ -164,8 +167,8 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void Flush_ClearsDirtyRegion()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "W+GOhR5vL3eslY6Gz0Dq7g==");
-            var renderer = new GraphicsRenderer(mockTarget);
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "AFlP1PQrpD/BygQnoFdilQ==");
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
             renderer.SetPixel(10, 10, Color.Red);
 
             // Act
@@ -180,9 +183,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         public void MultipleDrawOperations_MergesDirtyRegions()
         {
             // Arrange
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "0fdAVh+XL81cNKNMSy9tQw==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "c6M0FsWxWRnXFmZvExku2g==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.SetPixel(10, 10, Color.Red);
@@ -199,9 +202,9 @@ namespace ElectricFox.CobraUi.UnitTests.Graphics
         {
             // Arrange
             var expectedScanlines = new List<byte[]>();
-            var mockTarget = new MockTarget(TestWidth, TestHeight, "Bq6KAdgNqWLHmHwmSvZM7A==");
+            var mockTarget = new MockTarget(TestWidth, TestHeight, "mLz4/w44l1pYTYcdjWLm9A==");
 
-            var renderer = new GraphicsRenderer(mockTarget);
+            var renderer = new GraphicsRenderer(mockTarget, _logger);
 
             // Act
             renderer.Clear(Color.Black);
