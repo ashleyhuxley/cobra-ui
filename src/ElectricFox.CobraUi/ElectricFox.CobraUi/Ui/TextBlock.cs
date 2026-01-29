@@ -47,7 +47,7 @@ namespace ElectricFox.CobraUi.Ui
             Color = color;
         }
 
-        protected override void OnRender(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected override void OnRender(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             var bdfFont = resourceProvider.GetFont(Font);
 

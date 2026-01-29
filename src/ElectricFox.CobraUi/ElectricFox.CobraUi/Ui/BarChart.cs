@@ -24,7 +24,7 @@ namespace ElectricFox.CobraUi.Ui
             Height = height;
         }
 
-        protected override void OnRender(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected override void OnRender(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             renderer.FillRect(AbsolutePosition.X, AbsolutePosition.Y, Width, Height, BackgroundColor);
 

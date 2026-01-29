@@ -45,7 +45,7 @@ namespace ElectricFox.CobraUi.Ui
 
         public event Action<Rectangle>? Invalidated;
 
-        public void Render(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        public void Render(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             if (RequiresRedraw)
             {
@@ -56,11 +56,11 @@ namespace ElectricFox.CobraUi.Ui
             OnRendered(renderer, resourceProvider);
         }
 
-        protected virtual void OnRender(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected virtual void OnRender(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
         }
 
-        protected virtual void OnRendered(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected virtual void OnRendered(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
         }
 

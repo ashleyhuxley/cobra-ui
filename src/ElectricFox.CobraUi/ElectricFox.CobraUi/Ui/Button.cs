@@ -25,7 +25,7 @@ namespace ElectricFox.CobraUi.Ui
             Font = font;
         }
 
-        protected override void OnRender(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected override void OnRender(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             var bdfFont = resourceProvider.GetFont(Font);
             var absPos = AbsolutePosition;

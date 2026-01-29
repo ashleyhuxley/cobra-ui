@@ -16,7 +16,7 @@ namespace ElectricFox.CobraUi.Ui
             Image = image;
         }
 
-        protected override void OnRender(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected override void OnRender(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             var image = resourceProvider.GetImage(Image);
             _size = image.Size;

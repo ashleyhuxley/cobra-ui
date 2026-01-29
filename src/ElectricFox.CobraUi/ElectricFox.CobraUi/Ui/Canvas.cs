@@ -8,7 +8,7 @@ namespace ElectricFox.CobraUi.Ui
     {
         public override Size Size => new(Width, Height);
 
-        public event Action<GraphicsRenderer, IResourceProvider>? Rendered;
+        public event Action<IGraphicsRenderer, IResourceProvider>? Rendered;
 
         public int Width { get; }
 
@@ -20,7 +20,7 @@ namespace ElectricFox.CobraUi.Ui
             Height = height;
         }
 
-        protected override void OnRender(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected override void OnRender(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             Rendered?.Invoke(renderer, resourceProvider);
         }

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ElectricFox.CobraUi.Graphics
 {
-    public class GraphicsRenderer
+    public class GraphicsRenderer : IGraphicsRenderer
     {
         private readonly Image<Rgba32> _image;
         private readonly IScanlineTarget _target;

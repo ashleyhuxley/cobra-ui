@@ -52,7 +52,7 @@ namespace ElectricFox.CobraUi.Ui
             }
         }
 
-        protected override void OnRendered(GraphicsRenderer renderer, IResourceProvider resourceProvider)
+        protected override void OnRendered(IGraphicsRenderer renderer, IResourceProvider resourceProvider)
         {
             if (!Visible)
             {
