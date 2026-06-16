@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Tamzen8x15b.bdf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Resources\cobra-ui.png" />
+    <EmbeddedResource Include="Resources\Tamzen8x15b.bdf" />
   </ItemGroup>
 
   <ItemGroup>

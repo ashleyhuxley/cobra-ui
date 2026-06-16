@@ -16,7 +16,7 @@ namespace ElectrcFox.CobraUi.Demo.Screens
         {
             _picture = new Picture(ResourceManager.Images.CobraUi)
             {
-                Position = new SixLabors.ImageSharp.Point(10, 10)
+                Position = new SixLabors.ImageSharp.Point(85, 20)
             };
         }
 
