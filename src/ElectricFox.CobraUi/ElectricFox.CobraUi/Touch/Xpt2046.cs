@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SixLabors.ImageSharp;
 using System;
 using System.Device.Gpio;
 using System.Device.Spi;
@@ -158,7 +159,7 @@ public class Xpt2046 : IDisposable, ITouchController
         TouchEventReceived?.Invoke(new TouchEvent(point));
     }
 
-    private TouchPoint Calibrate(int rawX, int rawY)
+    private Point Calibrate(int rawX, int rawY)
     {
         if (_touchCalibration.SwapXY)
         {
@@ -188,7 +189,7 @@ public class Xpt2046 : IDisposable, ITouchController
         x = Math.Clamp(x, 0, 319);
         y = Math.Clamp(y, 0, 239);
 
-        return new TouchPoint(x, y);
+        return new Point(x, y);
     }
 
     protected virtual void Dispose(bool disposing)
