@@ -1,6 +1,7 @@
 ﻿using ElectrcFox.CobraUi.Demo.Screens;
 using ElectricFox.CobraUi;
 using ElectricFox.CobraUi.Demo;
+using ElectricFox.CobraUi.Demo.Screens;
 using ElectricFox.CobraUi.Display;
 using ElectricFox.CobraUi.Graphics;
 using ElectricFox.CobraUi.Touch;
@@ -56,6 +57,18 @@ public sealed class DemoApp : IDisposable
             var menuChoice = await screenManager.ShowAsync(new MainMenuScreen());
             switch (menuChoice)
             {
+                case MainMenuOption.TemperatureMonitor:
+                    //await screenManager.ShowAsync(new TemperatureMonitorScreen());
+                    break;
+                case MainMenuOption.PumpControl:
+                    //await screenManager.ShowAsync(new PumpControlScreen());
+                    break;
+                case MainMenuOption.Thermostat:
+                    //await screenManager.ShowAsync(new ThermostatScreen());
+                    break;
+                default:
+                    _cts.Cancel();
+                    break;
             }
         }
     }
